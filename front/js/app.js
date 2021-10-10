@@ -8,8 +8,6 @@ const apiCall = async function api() {
     // Utilisation d'une boucle forEach pour sélectionner les éléments de l'API
 
     data.forEach(function (sofa) {
-      console.log(sofa);
-
       //   Variables créées pour créer des éléments HTML dynamiques
       let a = document.createElement("a");
       let article = document.createElement("article");
@@ -23,9 +21,19 @@ const apiCall = async function api() {
       h3.classList.add("productName");
       p.classList.add("productDescription");
 
+      //   Récupérations des données de l'API
+
+      img.src = sofa.imageUrl;
+      img.alt = sofa.altTxt;
+      h3.textContent = sofa.name;
+      p.textContent = sofa.description;
+
       // -- Destination des éléments
       document.getElementById("items").appendChild(a);
-      document.getElementsByClassName("card")[0].appendChild(article);
+      a.appendChild(article);
+      article.appendChild(img);
+      article.appendChild(h3);
+      article.appendChild(p);
     });
   } catch (err) {
     console.log(`Erreur : ` + err);
