@@ -27,6 +27,15 @@ const apiCall = async function api() {
     document.getElementById("title").innerText = data.name;
     document.getElementById("price").innerText = data.price + " ";
     document.getElementById("description").innerText = data.description;
+    data.colors.forEach(function (color) {
+      const option = document.createElement("option");
+      const select = document.getElementById("colors");
+
+      option.value = color;
+      option.innerText = color;
+
+      select.appendChild(option);
+    });
   } catch (err) {
     console.log(`Erreur : ` + err);
     return false;
