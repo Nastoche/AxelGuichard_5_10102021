@@ -2,6 +2,7 @@
 const apiCall = async function api() {
   try {
     const url = `http://localhost:3000/api/products`;
+    const urlProduct = `./product.html?id=`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -22,7 +23,7 @@ const apiCall = async function api() {
       p.classList.add("productDescription");
 
       //   Récupérations des données de l'API
-      a.href = url + "/" + sofa._id;
+      a.href = urlProduct + sofa._id;
       img.src = sofa.imageUrl;
       img.alt = sofa.altTxt;
       h3.textContent = sofa.name;
@@ -37,6 +38,7 @@ const apiCall = async function api() {
     });
   } catch (err) {
     console.log(`Erreur : ` + err);
+    console.log(`Veuillez démarrer le serveur`);
     return false;
   }
 };
