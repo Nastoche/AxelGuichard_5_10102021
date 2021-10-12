@@ -22,7 +22,7 @@ const apiCall = async function api() {
       h3.classList.add("productName");
       p.classList.add("productDescription");
 
-      //   Récupérations des données de l'API
+      //   Récupération des données de l'API
       a.href = urlProduct + sofa._id;
       img.src = sofa.imageUrl;
       img.alt = sofa.altTxt;
