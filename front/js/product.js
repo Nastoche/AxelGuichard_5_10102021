@@ -15,6 +15,7 @@ const renderProductPage = async () => {
   addBtn.addEventListener("click", (event) => {
     event.preventDefault();
     handleAddProduct(data);
+    location.href = "http://127.0.0.1:5501/front/html/cart.html";
   });
 };
 renderProductPage();
