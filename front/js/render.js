@@ -57,3 +57,9 @@ export const renderProductDetail = (product) => {
     select.appendChild(option);
   });
 };
+
+// Popup de confirmation d'ajout au panier
+
+export const cartConfirm = function () {
+  alert("Article ajouté au panier");
+};
