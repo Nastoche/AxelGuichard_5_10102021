@@ -94,13 +94,13 @@ export const renderCartPage = async () => {
   for (let i = 0; i < savedProduct.length; i++) {
     const productId = savedProduct[i].productId;
     const productColor = savedProduct[i].productColor;
-    const productQty = savedProduct[i].productQty;
+    let productQty = savedProduct[i].productQty;
 
     // Déclaration des constantes HTML
     const cartItems = document.getElementById("cart__items");
 
     const data = await fetchProductById(productId);
-    console.log(data);
+    // console.log(data);
 
     //   Render
     const article = document.createElement("article");
@@ -112,9 +112,9 @@ export const renderCartPage = async () => {
     const divSettingsDelete = document.createElement("div");
     const img = document.createElement("img");
     const h2 = document.createElement("h2");
-    const pPrice = document.createElement("p");
+    let pPrice = document.createElement("p");
     const pColor = document.createElement("p");
-    const pQty = document.createElement("p");
+    let pQty = document.createElement("p");
     const pDel = document.createElement("p");
     const inputQty = document.createElement("input");
 
@@ -127,6 +127,7 @@ export const renderCartPage = async () => {
     divSettingsQty.classList.add("cart__item__content__settings__quantity");
     divSettingsDelete.classList.add("cart__item__content__settings__delete");
     pDel.classList.add("deleteItem");
+    inputQty.classList.add("inputQty");
 
     //   Attributs
     article.setAttribute(`data-id`, `${productId}`);
@@ -148,7 +149,6 @@ export const renderCartPage = async () => {
     pQty.innerText = productQty;
     pDel.innerText = "Supprimer";
     h2.innerText = data.name;
-    inputQty.type;
 
     //   Mise en page
     cartItems.appendChild(article);
@@ -166,9 +166,15 @@ export const renderCartPage = async () => {
     divContentInfo.appendChild(pPrice);
     divContentInfo.appendChild(pColor);
 
-    pDel.addEventListener("click", (e) => {
-      e.preventDefault;
+    let newInputQty = inputQty;
+    newInputQty.addEventListener("input", function () {
+      pQty.innerText = this.value;
+      pPrice.innerText = productPrice * this.value;
+    });
+
+    pDel.addEventListener("click", () => {
       alert("Produit supprimé du panier");
+      document.location.reload(true);
     });
   }
 };
