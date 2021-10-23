@@ -26,6 +26,7 @@ export const handleAddProduct = (data) => {
   } else {
     // Si le local storage est vide, créer un tableau et envoyer les données de chaque objet
     savedProduct = [];
+
     savedProduct.push(productObj);
     localStorage.setItem("product", JSON.stringify(savedProduct));
     alert("Article ajouté au panier");

@@ -5,5 +5,5 @@ let savedProductStr = JSON.stringify(savedProduct);
 
 renderCartPage(savedProduct);
 
-console.log(savedProduct);
-console.log(savedProductStr);
+// console.log(savedProduct);
+// console.log(savedProductStr);

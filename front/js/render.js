@@ -96,13 +96,11 @@ export const renderCartPage = async () => {
     let productColor = savedProduct[i].productColor;
     let productQty = savedProduct[i].productQty;
 
-    // Déclaration des constantes HTML
-    const cartItems = document.getElementById("cart__items");
-
     const data = await fetchProductById(productId);
     // console.log(data);
 
-    //   Render
+    // Déclaration des constantes HTML
+    const cartItems = document.getElementById("cart__items");
     const article = document.createElement("article");
     const divImg = document.createElement("div");
     const divContent = document.createElement("div");
@@ -117,17 +115,6 @@ export const renderCartPage = async () => {
     let pQty = document.createElement("p");
     const pDel = document.createElement("p");
     const inputQty = document.createElement("input");
-
-    //  Ajout de classes aux éléments créés dynamiquement
-    article.classList.add("cart__item");
-    divImg.classList.add("cart__item__img");
-    divContent.classList.add("cart__item__content");
-    divContentInfo.classList.add("cart__item__content__titlePrice");
-    divSettings.classList.add("cart__item__content__settings");
-    divSettingsQty.classList.add("cart__item__content__settings__quantity");
-    divSettingsDelete.classList.add("cart__item__content__settings__delete");
-    pDel.classList.add("deleteItem");
-    inputQty.classList.add("inputQty");
 
     //   Attributs
     article.setAttribute(`data-id`, `${productId}`);
@@ -166,6 +153,17 @@ export const renderCartPage = async () => {
     divContentInfo.appendChild(pPrice);
     divContentInfo.appendChild(pColor);
 
+    //  Ajout de classes aux éléments créés dynamiquement
+    article.classList.add("cart__item");
+    divImg.classList.add("cart__item__img");
+    divContent.classList.add("cart__item__content");
+    divContentInfo.classList.add("cart__item__content__titlePrice");
+    divSettings.classList.add("cart__item__content__settings");
+    divSettingsQty.classList.add("cart__item__content__settings__quantity");
+    divSettingsDelete.classList.add("cart__item__content__settings__delete");
+    pDel.classList.add("deleteItem");
+    inputQty.classList.add("inputQty");
+
     let newInputQty = inputQty;
     // Changer dynamiquement la quantité produit sur la page panier
     newInputQty.addEventListener("input", function () {
@@ -174,6 +172,9 @@ export const renderCartPage = async () => {
       savedProduct[i].productQty = this.value;
       console.log(savedProduct);
       localStorage.setItem("product", JSON.stringify(savedProduct));
+      setTimeout(function () {
+        location.reload();
+      }, 500);
     });
 
     pDel.addEventListener("click", () => {
@@ -183,4 +184,24 @@ export const renderCartPage = async () => {
       document.location.reload(true);
     });
   }
+
+  async function totalPriceRender() {
+    const totalPrice = document.getElementById("totalPrice");
+    let totalPriceArr = [];
+    for (let i = 0; i < savedProduct.length; i++) {
+      let productId = savedProduct[i].productId;
+      const data = await fetchProductById(productId);
+
+      const productQty = savedProduct[i].productQty;
+      const productPrice = data.price;
+      const totalPriceCalc = productQty * productPrice;
+      totalPriceArr.push(totalPriceCalc);
+    }
+    const sumTotalPriceArr = totalPriceArr.reduce(
+      (sumPrice, totalPriceArr) => sumPrice + totalPriceArr
+    );
+    console.log(sumTotalPriceArr);
+    totalPrice.innerText = sumTotalPriceArr;
+  }
+  totalPriceRender();
 };
