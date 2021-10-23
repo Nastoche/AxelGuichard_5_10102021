@@ -92,8 +92,8 @@ export const renderProductDetail = (product) => {
 export const renderCartPage = async () => {
   let savedProduct = JSON.parse(localStorage.getItem("product"));
   for (let i = 0; i < savedProduct.length; i++) {
-    const productId = savedProduct[i].productId;
-    const productColor = savedProduct[i].productColor;
+    let productId = savedProduct[i].productId;
+    let productColor = savedProduct[i].productColor;
     let productQty = savedProduct[i].productQty;
 
     // Déclaration des constantes HTML
@@ -167,12 +167,18 @@ export const renderCartPage = async () => {
     divContentInfo.appendChild(pColor);
 
     let newInputQty = inputQty;
+    // Changer dynamiquement la quantité produit sur la page panier
     newInputQty.addEventListener("input", function () {
       pQty.innerText = this.value;
-      pPrice.innerText = productPrice * this.value;
+      pPrice.innerText = productPrice * this.value + " €";
+      savedProduct[i].productQty = this.value;
+      console.log(savedProduct);
+      localStorage.setItem("product", JSON.stringify(savedProduct));
     });
 
     pDel.addEventListener("click", () => {
+      savedProduct.splice(i, 1);
+      localStorage.setItem("product", JSON.stringify(savedProduct));
       alert("Produit supprimé du panier");
       document.location.reload(true);
     });
