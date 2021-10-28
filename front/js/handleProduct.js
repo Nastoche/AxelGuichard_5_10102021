@@ -32,4 +32,11 @@ export const handleAddProduct = (data) => {
     alert("Article ajouté au panier");
     console.log(savedProduct);
   }
+  // for (let i = 0; i < savedProduct.length; i++) {
+  //   if (savedProduct[i].productColor === color) {
+  //     console.log("Ce produit est déjà dans le panier");
+  //   } else {
+  //     console.log("Ce produit n'est PAS dans le panier");
+  //   }
+  // }
 };

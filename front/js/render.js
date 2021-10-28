@@ -116,14 +116,6 @@ export const renderCartPage = async () => {
     const pDel = document.createElement("p");
     const inputQty = document.createElement("input");
 
-    //   Attributs
-    article.setAttribute(`data-id`, `${productId}`);
-    inputQty.setAttribute("type", "number");
-    inputQty.setAttribute("name", "itemQuantity");
-    inputQty.setAttribute("min", "1");
-    inputQty.setAttribute("max", "100");
-    inputQty.setAttribute("value", `${productQty}`);
-
     //   Récupération données API
 
     const productPrice = data.price;
@@ -164,6 +156,14 @@ export const renderCartPage = async () => {
     pDel.classList.add("deleteItem");
     inputQty.classList.add("inputQty");
 
+    //   Attributs
+    article.setAttribute(`data-id`, `${productId}`);
+    inputQty.setAttribute("type", "number");
+    inputQty.setAttribute("name", "itemQuantity");
+    inputQty.setAttribute("min", "1");
+    inputQty.setAttribute("max", "100");
+    inputQty.setAttribute("value", `${productQty}`);
+
     let newInputQty = inputQty;
     // Changer dynamiquement la quantité produit sur la page panier
     newInputQty.addEventListener("input", function () {
@@ -173,10 +173,11 @@ export const renderCartPage = async () => {
       console.log(savedProduct);
       localStorage.setItem("product", JSON.stringify(savedProduct));
       setTimeout(function () {
-        location.reload();
+        document.location.reload(true);
       }, 500);
     });
 
+    // Suppression d'un produit du panier (et donc du local storage)
     pDel.addEventListener("click", () => {
       savedProduct.splice(i, 1);
       localStorage.setItem("product", JSON.stringify(savedProduct));
@@ -185,6 +186,8 @@ export const renderCartPage = async () => {
     });
   }
 
+  // Récupération du prix total de façon sécurisée en appelant l'API pour récupérer
+  // les prix et les multiplier par les quantités demandées par le client
   async function totalPriceRender() {
     const totalPrice = document.getElementById("totalPrice");
     let totalPriceArr = [];
@@ -202,6 +205,15 @@ export const renderCartPage = async () => {
     );
     console.log(sumTotalPriceArr);
     totalPrice.innerText = sumTotalPriceArr;
+    localStorage.setItem("totalPrice", JSON.stringify(sumTotalPriceArr));
   }
   totalPriceRender();
+};
+
+// Implémentation du numéro de commande ainsi que du montant total final
+export const renderConfirmPage = () => {
+  const orderIdSpan = document.getElementById("orderId");
+  const storedPrice = JSON.parse(localStorage.getItem("totalPrice"));
+
+  orderIdSpan.innerHTML = `<br>D'un montant total de ${storedPrice}€`;
 };
