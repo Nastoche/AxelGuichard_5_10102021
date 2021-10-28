@@ -2,8 +2,7 @@ export const handleAddProduct = (data) => {
   const color = document.getElementById("colors").value;
   const productQty = document.getElementById("quantity").value;
   const price = document.getElementById("price").innerText;
-
-  let savedProduct = JSON.parse(localStorage.getItem("product"));
+  let savedProduct;
 
   // Création de l'objet pour le produit sélectionné
   let productObj = {
@@ -17,26 +16,15 @@ export const handleAddProduct = (data) => {
     return;
   }
 
-  if (savedProduct) {
-    // Si le local storage n'est pas vide
-    savedProduct.push(productObj);
-    localStorage.setItem("product", JSON.stringify(savedProduct));
-    alert("Article ajouté au panier");
-    console.log(savedProduct);
-  } else {
-    // Si le local storage est vide, créer un tableau et envoyer les données de chaque objet
+  if (JSON.parse(localStorage.getItem("product")) == null) {
     savedProduct = [];
-
     savedProduct.push(productObj);
     localStorage.setItem("product", JSON.stringify(savedProduct));
     alert("Article ajouté au panier");
-    console.log(savedProduct);
+  } else {
+    savedProduct = JSON.parse(localStorage.getItem("product"));
+    savedProduct.push(productObj);
+    localStorage.setItem("product", JSON.stringify(savedProduct));
+    alert("Article ajouté au panier");
   }
-  // for (let i = 0; i < savedProduct.length; i++) {
-  //   if (savedProduct[i].productColor === color) {
-  //     console.log("Ce produit est déjà dans le panier");
-  //   } else {
-  //     console.log("Ce produit n'est PAS dans le panier");
-  //   }
-  // }
 };
