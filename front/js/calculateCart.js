@@ -32,6 +32,7 @@ export const inputQtyCalc = (
   let newInputQty = inputQty;
   newInputQty.addEventListener("input", function () {
     if (inputQty.value <= 0) {
+      // negative qty impossible
       return;
     } else {
       pQty.innerText = this.value;
