@@ -10,7 +10,6 @@ export const handleAddProduct = (data) => {
   const productInputQty = document.getElementById("quantity").value;
   let savedProduct = JSON.parse(localStorage.getItem("product"));
   const pageProductId = data._id;
-  console.log(savedProduct);
 
   // Création de l'objet pour le produit sélectionné
   let productObj = {
@@ -19,8 +18,8 @@ export const handleAddProduct = (data) => {
     productQty: Number(productInputQty),
   };
 
-  // Si aucune couleur n'est choisie OU que la quantité est nulle alors ne rien faire
-  if (colorInput == "" || productInputQty == "0") {
+  // Si aucune couleur n'est choisie OU que la quantité est inférieur ou égale à 0 alors ne rien faire
+  if (colorInput == "" || productInputQty <= 0) {
     return;
   }
 

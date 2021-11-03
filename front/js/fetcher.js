@@ -8,7 +8,6 @@ export const fetchAllProducts = async () => {
   } catch (err) {
     console.log(`Erreur : ` + err);
     console.log(`Veuillez démarrer le serveur`);
-
     return null;
   }
 };
@@ -19,9 +18,6 @@ export const fetchProductById = async (urlId) => {
     const url = `http://localhost:3000/api/products/${urlId}`;
     const response = await fetch(url);
     const sofaId = await response.json();
-
-    // console.log(sofaId);
-
     return sofaId;
   } catch (err) {
     console.log(`Erreur : ` + err);
@@ -35,9 +31,6 @@ export const fetchProductByIdCart = async (id) => {
     const url = `http://localhost:3000/api/products/${id}`;
     const response = await fetch(url);
     const sofaId = await response.json();
-
-    // console.log(sofaId);
-
     return sofaId;
   } catch (err) {
     console.log(`Erreur : ` + err);

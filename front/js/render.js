@@ -1,6 +1,9 @@
 import { fetchProductById } from "./fetcher.js";
 import { calculateTotalCart } from "./calculateCart.js";
+import { inputQtyCalc } from "./calculateCart.js";
+import { deleteProduct } from "./calculateCart.js";
 
+//  Rendu de la page index.html
 export const renderHomeProduct = (sofa) => {
   const a = document.createElement("a");
   const article = document.createElement("article");
@@ -30,7 +33,7 @@ export const renderHomeProduct = (sofa) => {
   article.appendChild(p);
 };
 
-//
+// Rendu de la page product.html
 export const renderProductDetail = (product) => {
   const img = document.createElement("img");
   //   Récupération des données de l'API
@@ -61,40 +64,12 @@ export const renderProductDetail = (product) => {
   });
 };
 
-// export const renderCartProduct = (productInCart) => {
-//   let savedProduct = JSON.parse(localStorage.getItem("product"));
-//   if (savedProduct !== null) {
-//     const article = document.createElement("article");
-//     const div = document.createElement("div");
-//     const img = document.createElement("img");
-//     const h2 = document.createElement("h2");
-//     const p = document.createElement("p");
-
-//     // -- Ajout de classes aux éléments créés dynamiquement
-//     article.classList.add("cart__item");
-
-//     // Récupération des données API pour les sources
-
-//     console.log("Produits dans le panier :");
-//     console.log(savedProduct);
-
-//     // test de parse etc
-//     const productName = localStorage.getItem(
-//       "product",
-//       JSON.parse(savedProduct.productName)
-//     );
-//   } else {
-//     console.log("Panier vide");
-//   }
-// };
-
-// CART RENDER PAGE -------------------------------
-
+// Rendu de la page cart.html
 export const renderCartPage = async () => {
   let savedProduct = JSON.parse(localStorage.getItem("product"));
-  if (!savedProduct) {
+  if (!savedProduct || savedProduct == "") {
     const emptyCart = document.querySelector("h1");
-    emptyCart.innerHTML = emptyCart.innerText + " est vide.";
+    emptyCart.innerHTML = emptyCart.innerText + " est vide";
   } else {
     const allProductsPrice = [];
     savedProduct.forEach((productItem, i) => {
@@ -104,7 +79,6 @@ export const renderCartPage = async () => {
 
       const data = fetchProductById(productId); // promesse en cours
       allProductsPrice.push(data);
-      // console.log(data);
 
       // Déclaration des constantes HTML
       const cartItems = document.getElementById("cart__items");
@@ -125,7 +99,6 @@ export const renderCartPage = async () => {
 
       //   Récupération données API
       data.then((priceData) => {
-        console.log("priceData", priceData);
         // priceData === await fetchProductById => on a attendu => promesse résolue
         const productPrice = priceData.price;
         const totalProductPrice = productPrice * productQty;
@@ -175,40 +148,23 @@ export const renderCartPage = async () => {
         inputQty.setAttribute("max", "100");
         inputQty.setAttribute("value", `${productQty}`);
 
-        let newInputQty = inputQty;
-        // Changer dynamiquement la quantité produit sur la page panier
-        newInputQty.addEventListener("input", function () {
-          pQty.innerText = this.value;
-          pPrice.innerText = productPrice * this.value + " €";
-          productItem.productQty = this.value;
-          console.log(savedProduct);
-          localStorage.setItem("product", JSON.stringify(savedProduct));
-          calculateTotalCart(allProductsPrice);
-        });
+        // Actualise les prix par rapport à la quantité choisie
 
-        /*handleChangeQty(pQty, pPrice, productItem);
-        const handleChangeQty = (pQty, pPrice, savedProduct) => {
-          newInputQty.addEventListener("input", function () {
-            pQty.innerText = this.value;
-            pPrice.innerText = productPrice * this.value + " €";
-            productItem.productQty = this.value;
-            console.log(savedProduct);
-            localStorage.setItem("product", JSON.stringify(savedProduct));
-            calculateTotalCart(allProductsPrice);
-          });
-        };*/
+        inputQtyCalc(
+          inputQty,
+          pQty,
+          pPrice,
+          productItem,
+          productPrice,
+          savedProduct,
+          allProductsPrice
+        );
 
         // Suppression d'un produit du panier (et donc du local storage)
-        pDel.addEventListener("click", () => {
-          savedProduct.splice(i, 1);
-          localStorage.setItem("product", JSON.stringify(savedProduct));
-          alert("Produit supprimé du panier");
-          document.location.reload(true);
-        });
+        deleteProduct(pDel, savedProduct, i);
       });
     });
-    console.log("MERDE ON ATTEND ENCORE API", allProductsPrice);
-
+    // console.log("On attend encore l'API", allProductsPrice);
     calculateTotalCart(allProductsPrice);
   }
 };
@@ -217,6 +173,5 @@ export const renderCartPage = async () => {
 export const renderConfirmPage = () => {
   const orderIdSpan = document.getElementById("orderId");
   const storedPrice = JSON.parse(localStorage.getItem("totalPrice"));
-
   orderIdSpan.innerHTML = `<br>D'un montant total de ${storedPrice}€`;
 };
