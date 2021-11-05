@@ -171,7 +171,9 @@ export const renderCartPage = async () => {
 
 // Implémentation du numéro de commande ainsi que du montant total final
 export const renderConfirmPage = () => {
+  let order = JSON.parse(localStorage.getItem("order"));
+  console.log(order.orderId);
   const orderIdSpan = document.getElementById("orderId");
-  const storedPrice = JSON.parse(localStorage.getItem("totalPrice"));
-  orderIdSpan.innerHTML = `<br>D'un montant total de ${storedPrice}€`;
+  orderIdSpan.innerHTML = "<br>" + order.orderId;
+  localStorage.clear();
 };

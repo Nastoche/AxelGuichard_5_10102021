@@ -1,3 +1,5 @@
+import { fetchPostOrder } from "./fetcher.js";
+
 let savedProduct = JSON.parse(localStorage.getItem("product"));
 console.log(savedProduct);
 export const order = () => {
@@ -26,13 +28,14 @@ export const order = () => {
       (regexLocation.test(contact.address) == true)
     ) {
       e.preventDefault();
-      console.log("Commande effectuée avec succès ! Merci pour la moula");
       let products = [];
       for (let listId of savedProduct) {
         products.push(listId.productId);
       }
       console.log(products);
       console.log(contact);
+      alert("Commande effectuée avec succès ! Merci pour la moula");
+      fetchPostOrder(contact, products);
     } else {
       alert("Tous les champs d'informations doivent être remplis correctement");
     }
