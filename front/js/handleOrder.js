@@ -37,7 +37,7 @@ export const order = () => {
       alert("Commande effectuée avec succès ! Merci pour la moula");
       fetchPostOrder(contact, products);
     } else {
-      alert("Tous les champs d'informations doivent être remplis correctement");
+      alert("Tous les champs d'informations doivent être correctement remplis");
     }
   });
 };
