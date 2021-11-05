@@ -1,69 +1,40 @@
-const cartOrderForm = document.querySelector(".cart__order__form");
+let savedProduct = JSON.parse(localStorage.getItem("product"));
+console.log(savedProduct);
+export const order = () => {
+  const orderBtn = document.getElementById("order");
+  const regexName =
+    /^(?=.{1,50}$)[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]+(?:['-_.\s][a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]+)*$/i;
+  const regexLocation =
+    /^[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\s,. '-]{3,}$/;
+  const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
 
-console.log(cartOrderForm.firstName);
-
-// Ecouter la modification du prénom
-cartOrderForm.firstName.addEventListener("input", function () {
-  validFirstName(this);
-});
-
-// Regex Prénom
-const validFirstName = (inputFirstName) => {
-  const firstNameRegex = new RegExp(
-    /^(?=.{1,50}$)[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]+(?:['-_.\s][a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]+)*$/i
-  );
-  // /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i  === Aucun accent pris en charge
-  let testFirstName = firstNameRegex.test(inputFirstName.value);
-  console.log(testFirstName);
-};
-
-// Ecouter la modification du nom
-cartOrderForm.lastName.addEventListener("input", function () {
-  validLastName(this);
-});
-// Regex Nom de Famille
-const validLastName = (inputLastName) => {
-  let lastNameRegex = new RegExp(
-    /^(?=.{1,50}$)[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]+(?:['-_.\s][a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]+)*$/i
-  );
-  let testLastName = lastNameRegex.test(inputLastName.value);
-  console.log(testLastName);
-};
-
-// Ecouter la modification de l'adresse
-cartOrderForm.address.addEventListener("input", function () {
-  validAddress(this);
-});
-const validAddress = (inputAddress) => {
-  const addressRegex = new RegExp(
-    /^[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\s,. '-]{3,}$/
-  );
-  let testAddress = addressRegex.test(inputAddress.value);
-  console.log(testAddress);
-};
-
-// Ecouter la modification de la ville
-cartOrderForm.city.addEventListener("input", function () {
-  validCity(this);
-});
-const validCity = (inputCity) => {
-  const cityRegex = new RegExp(
-    /^[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\s,. '-]{3,}$/
-  );
-  let testCity = cityRegex.test(inputCity.value);
-  console.log(testCity);
-};
-
-// Ecouter la modification de l'email
-cartOrderForm.email.addEventListener("input", function () {
-  validEmail(this);
-});
-
-// Regex email
-const validEmail = (inputEmail) => {
-  let emailRegex = new RegExp(
-    "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
-    "g"
-  );
-  let testEmail = emailRegex.test(inputEmail.value);
+  orderBtn.addEventListener("click", (e) => {
+    // Prépare l'obj contact pour la requête POST
+    let contact = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      city: document.getElementById("city").value,
+      email: document.getElementById("email").value,
+    };
+    // on valide que le formulaire soit correctement rempli
+    if (
+      (regexEmail.test(contact.email) == true) &
+      (regexName.test(contact.firstName) == true) &
+      (regexName.test(contact.lastName) == true) &
+      (regexLocation.test(contact.city) == true) &
+      (regexLocation.test(contact.address) == true)
+    ) {
+      e.preventDefault();
+      console.log("Commande effectuée avec succès ! Merci pour la moula");
+      let products = [];
+      for (let listId of savedProduct) {
+        products.push(listId.productId);
+      }
+      console.log(products);
+      console.log(contact);
+    } else {
+      alert("Tous les champs d'informations doivent être remplis correctement");
+    }
+  });
 };
