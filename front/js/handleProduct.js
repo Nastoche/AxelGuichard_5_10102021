@@ -27,18 +27,11 @@ export const handleAddProduct = (data) => {
   // afin d'y injecter la quantité uniquement si la couleur choisie est identique
 
   if (savedProduct) {
-    const indexId = savedProduct.find(
-      (element) => element.productId === pageProductId
+    const index = savedProduct.find(
+      (element) =>
+        element.productId === pageProductId &&
+        element.productColor === colorInput
     );
-    const indexColor = savedProduct.find(
-      (element) => element.productColor === colorInput
-    );
-    const index = indexId && indexColor;
-
-    // const index = savedProduct.find((element) => {
-    //   element.productId === pageProductId &&
-    //   element.productColor === colorInput;
-    // });
     if (index) {
       const numberProductInputQty = Number(productInputQty);
       index.productQty = Number(index.productQty) + numberProductInputQty;
