@@ -8,6 +8,7 @@ const renderPage = async () => {
 
   data.forEach(function (sofa) {
     renderHomeProduct(sofa);
+    console.log(sofa);
   });
 };
 

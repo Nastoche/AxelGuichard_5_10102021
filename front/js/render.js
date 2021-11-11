@@ -5,6 +5,7 @@ import { deleteProduct } from "./calculateCart.js";
 
 //  Rendu de la page index.html
 export const renderHomeProduct = (sofa) => {
+  // Constantes de création d'éléments HTML
   const a = document.createElement("a");
   const article = document.createElement("article");
   const img = document.createElement("img");
@@ -12,20 +13,20 @@ export const renderHomeProduct = (sofa) => {
   const p = document.createElement("p");
   const urlProduct = `./product.html?id=`;
 
-  // -- Ajout de classes aux éléments créés dynamiquement
+  // Ajout de classes aux éléments créés dynamiquement
   article.classList.add("card__article");
   a.classList.add("card");
   h3.classList.add("productName");
   p.classList.add("productDescription");
 
-  //   Récupération des données de l'API
+  // Récupération des données de l'API
   a.href = urlProduct + sofa._id;
   img.src = sofa.imageUrl;
   img.alt = sofa.altTxt;
   h3.textContent = sofa.name;
   p.textContent = sofa.description;
 
-  // -- Destination des éléments
+  // Destination des éléments
   document.getElementById("items").appendChild(a);
   a.appendChild(article);
   article.appendChild(img);
@@ -36,12 +37,12 @@ export const renderHomeProduct = (sofa) => {
 // Rendu de la page product.html
 export const renderProductDetail = (product) => {
   const img = document.createElement("img");
-  //   Récupération des données de l'API
+  // Récupération des données de l'API
 
   img.src = product.imageUrl;
   img.alt = product.altTxt;
 
-  // -- Destination des éléments
+  // Destination des éléments
   document.getElementsByClassName("item__img")[0].appendChild(img);
   document.getElementById("title").innerText = product.name;
   document.getElementById("price").innerText = product.price + " ";
@@ -67,10 +68,12 @@ export const renderProductDetail = (product) => {
 // Rendu de la page cart.html
 export const renderCartPage = async () => {
   let savedProduct = JSON.parse(localStorage.getItem("product"));
+  // Si le local storage est inexistant ou vide, alors afficher "Votre panier est vide"
   if (!savedProduct || savedProduct == "") {
     const emptyCart = document.querySelector("h1");
     emptyCart.innerHTML = emptyCart.innerText + " est vide";
   } else {
+    // Sinon, afficher les produits présents dans le local storage dans le panier
     const allProductsPrice = [];
     savedProduct.forEach((productItem, i) => {
       let productId = productItem.productId;
@@ -169,10 +172,19 @@ export const renderCartPage = async () => {
   }
 };
 
+export const renderEmptyCart = () => {
+  let savedProduct = JSON.parse(localStorage.getItem("product"));
+  if (!savedProduct || savedProduct.length === 0) {
+    const cart = document.getElementsByClassName("cart");
+    if (cart[0]) {
+      cart[0].style.display = "none";
+    }
+  }
+};
+
 // Implémentation du numéro de commande ainsi que du montant total final
 export const renderConfirmPage = () => {
   let order = JSON.parse(localStorage.getItem("order"));
-  console.log(order.orderId);
   const orderIdSpan = document.getElementById("orderId");
   orderIdSpan.innerHTML = "<br>" + order.orderId;
   localStorage.clear();

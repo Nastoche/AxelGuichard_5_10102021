@@ -35,6 +35,10 @@ export const handleAddProduct = (data) => {
     );
     const index = indexId && indexColor;
 
+    // const index = savedProduct.find((element) => {
+    //   element.productId === pageProductId &&
+    //   element.productColor === colorInput;
+    // });
     if (index) {
       const numberProductInputQty = Number(productInputQty);
       index.productQty = Number(index.productQty) + numberProductInputQty;

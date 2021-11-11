@@ -39,6 +39,7 @@ export const fetchProductByIdCart = async (id) => {
 };
 
 export const fetchPostOrder = async (contact, products) => {
+  // Envoyer le formulaire de contact ainsi que le tableau "products" au back avec la méthode POST
   fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: {
@@ -46,6 +47,7 @@ export const fetchPostOrder = async (contact, products) => {
     },
     body: JSON.stringify({ contact, products }),
   })
+    // On attend la réponse du back en JSON pour récupérer l'order ID généré par le back pour l'afficher plus tard à l'utilisateur
     .then((response) => response.json())
     .then((data) => {
       localStorage.setItem("order", JSON.stringify(data));

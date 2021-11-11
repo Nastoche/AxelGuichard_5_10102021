@@ -17,4 +17,5 @@ const renderProductPage = async () => {
     handleAddProduct(data);
   });
 };
+
 renderProductPage();
